@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: thevace_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: vace_user
+      POSTGRES_PASSWORD: vace_password
+      POSTGRES_DB: thevace_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - thevace_pgdata:/var/lib/postgresql/data
+
+volumes:
+  thevace_pgdata:
