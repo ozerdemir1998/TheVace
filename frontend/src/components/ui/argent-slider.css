@@ -1,0 +1,173 @@
+.parallax-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.project-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1;
+}
+
+.project {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+    pointer-events: none;
+}
+
+/* Background Overlay for Contrast */
+.project::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 2;
+}
+
+.minimap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.minimap-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    /* ENLARGED */
+    height: 500px;
+    display: flex;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(60px);
+    -webkit-backdrop-filter: blur(60px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+    pointer-events: auto;
+    overflow: hidden;
+    /* CRITICAL: Prevent leakage */
+}
+
+.minimap-img-preview {
+    position: relative;
+    width: 480px;
+    /* ENLARGED */
+    height: 500px;
+    overflow: hidden;
+    border-radius: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.minimap-img-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.minimap-img-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+}
+
+.minimap-info-list {
+    position: relative;
+    flex: 1;
+    height: 500px;
+    /* MATCH CONTAINER EXACTLY */
+    overflow: hidden;
+    /* PREVENT LEAKAGE */
+}
+
+.minimap-item-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    /* EXACT SNAP HEIGHT */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 80px;
+    /* Increased padding for better hierarchy */
+    box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+    .minimap-wrapper {
+        max-width: 900px;
+    }
+
+    .minimap-img-preview {
+        width: 350px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .minimap-wrapper {
+        margin: 0 20px;
+        flex-direction: column;
+        height: auto;
+        min-height: 600px;
+        border-radius: 0;
+    }
+
+    .minimap-img-preview {
+        width: 100%;
+        height: 300px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .minimap-info-list {
+        padding: 40px;
+        height: auto;
+    }
+
+    .minimap-item-info {
+        height: auto;
+        position: relative;
+        padding: 0;
+    }
+}
