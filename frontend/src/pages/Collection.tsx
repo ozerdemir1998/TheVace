@@ -1,41 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FullScreenScrollFX } from "../components/ui/full-screen-scroll-fx";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
-const sections = [
-    {
-        id: "yaz",
-        leftLabel: "YAZ/2026",
-        title: "YAZ",
-        rightLabel: "COLLECTION",
-        background: "https://images.unsplash.com/photo-1523381235312-3a1647fa9917?q=80&w=2670",
-    },
-    {
-        id: "ilkbahar",
-        leftLabel: "İLKBAHAR/2026",
-        title: "İLKBAHAR",
-        rightLabel: "COLLECTION",
-        background: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=2670",
-    },
-    {
-        id: "kis",
-        leftLabel: "KIŞ/2026",
-        title: "KIŞ",
-        rightLabel: "COLLECTION",
-        background: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2670",
-    },
-    {
-        id: "sonbahar",
-        leftLabel: "SONBAHAR/2026",
-        title: "SONBAHAR",
-        rightLabel: "COLLECTION",
-        background: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=2670",
-    },
-];
-
 const CollectionPage = () => {
+    const [sections, setSections] = useState<any[]>([]);
+
+    useEffect(() => {
+        const loadCollections = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/products');
+                const data = await response.json();
+
+                const getHeroImage = (offset: number) => {
+                    return data[offset] ? data[offset].imageUrl : `https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/${offset + 1}.png`;
+                };
+
+                setSections([
+                    {
+                        id: "yaz",
+                        leftLabel: "YAZ/2026",
+                        title: "YAZ",
+                        rightLabel: "COLLECTION",
+                        background: getHeroImage(5),
+                    },
+                    {
+                        id: "ilkbahar",
+                        leftLabel: "İLKBAHAR/2026",
+                        title: "İLKBAHAR",
+                        rightLabel: "COLLECTION",
+                        background: getHeroImage(12),
+                    },
+                    {
+                        id: "kis",
+                        leftLabel: "KIŞ/2026",
+                        title: "KIŞ",
+                        rightLabel: "COLLECTION",
+                        background: getHeroImage(18),
+                    },
+                    {
+                        id: "sonbahar",
+                        leftLabel: "SONBAHAR/2026",
+                        title: "SONBAHAR",
+                        rightLabel: "COLLECTION",
+                        background: getHeroImage(24),
+                    },
+                ]);
+            } catch (err) {
+                console.error("Failed to load collections", err);
+            }
+        };
+        loadCollections();
+    }, []);
+
+    if (sections.length === 0) return <div className="bg-black w-full h-screen" />;
+
     return (
         <div className="bg-black">
             <FullScreenScrollFX

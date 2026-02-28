@@ -12,28 +12,7 @@ import { GooeyText } from '@/components/ui/gooey-text-morphing';
 import NumberFlow from '@number-flow/react';
 import { Button } from '@/components/ui/button';
 
-const HOME_CATEGORIES = [
-  {
-    id: "tisort",
-    title: "Tişört",
-    imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200",
-  },
-  {
-    id: "hoodie",
-    title: "Hoodie",
-    imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1200",
-  },
-  {
-    id: "esofman-alti",
-    title: "Eşofman Altı",
-    imageUrl: "https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1200",
-  },
-  {
-    id: "kapsonlu-sweat",
-    title: "Kapşonlu Sweat",
-    imageUrl: "https://images.unsplash.com/photo-1509942704431-4ff74c33968b?q=80&w=1200",
-  },
-]
+
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -50,6 +29,7 @@ const ProductList = () => {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
 
   const [parallaxImages, setParallaxImages] = useState<any[]>([]);
+  const [categoryCards, setCategoryCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
@@ -71,6 +51,50 @@ const ProductList = () => {
         }));
 
         setParallaxImages(mappedData);
+
+        const getHeroImage = (cat: string, fallbackId: number) => {
+          const match = data.find((p: any) => p.category?.toLowerCase() === cat.toLowerCase());
+          return match ? match.imageUrl : `https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/${fallbackId}.png`;
+        };
+
+        setCategoryCards([
+          {
+            title: "TİŞÖRT",
+            description: "CORE PERFORMANCE COLLECTION",
+            tag: "tisort",
+            src: getHeroImage('Tişört', 1),
+            link: "/category/tisort",
+            color: "black",
+            textColor: "white",
+          },
+          {
+            title: "HOODIE",
+            description: "INDUSTRIAL HEAVYWEIGHT SERIES",
+            src: getHeroImage('Hoodie', 7),
+            tag: "hoodie",
+            link: "/category/hoodie",
+            color: "black",
+            textColor: "white",
+          },
+          {
+            title: "BOTTOMS",
+            description: "KINETIC RANGE OF OPS",
+            src: getHeroImage('Eşofman Altı', 15),
+            tag: "esofman-alti",
+            link: "/category/esofman-alti",
+            color: "black",
+            textColor: "white",
+          },
+          {
+            title: "SWEAT",
+            description: "URBAN EVOLUTION WEAR",
+            src: getHeroImage('Kapşonlu Sweat', 21),
+            tag: "kapsonlu-sweat",
+            link: "/category/kapsonlu-sweat",
+            color: "black",
+            textColor: "white",
+          },
+        ]);
       } catch (err) {
         console.error("Failed to fetch products", err);
       } finally {
@@ -154,46 +178,7 @@ const ProductList = () => {
         {/* Keeping a smaller negative margin to pull card from h-screen dead center, creating a visible gap below title */}
         <div className="relative w-full -mt-[5vh] md:-mt-[10vh]">
 
-          <CardsParallax
-            items={[
-              {
-                title: "TİŞÖRT",
-                description: "CORE PERFORMANCE COLLECTION",
-                tag: "tisort",
-                src: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200",
-                link: "/category/tisort",
-                color: "black",
-                textColor: "white",
-              },
-              {
-                title: "HOODIE",
-                description: "INDUSTRIAL HEAVYWEIGHT SERIES",
-                src: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1200",
-                tag: "hoodie",
-                link: "/category/hoodie",
-                color: "black",
-                textColor: "white",
-              },
-              {
-                title: "BOTTOMS",
-                description: "KINETIC RANGE OF OPS",
-                src: "https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1200",
-                tag: "esofman-alti",
-                link: "/category/esofman-alti",
-                color: "black",
-                textColor: "white",
-              },
-              {
-                title: "SWEAT",
-                description: "URBAN EVOLUTION WEAR",
-                src: "https://images.unsplash.com/photo-1509942704431-4ff74c33968b?q=80&w=1200",
-                tag: "kapsonlu-sweat",
-                link: "/category/kapsonlu-sweat",
-                color: "black",
-                textColor: "white",
-              },
-            ]}
-          />
+          {categoryCards.length > 0 && <CardsParallax items={categoryCards} />}
         </div>
       </section>
 

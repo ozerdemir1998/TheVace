@@ -62,24 +62,27 @@ const CONFIG = {
 const lerp = (start: number, end: number, factor: number) =>
     start + (end - start) * factor;
 
-const getProjectData = (index: number) => {
-    const i =
-        ((Math.abs(index) % PROJECT_DATA.length) + PROJECT_DATA.length) %
-        PROJECT_DATA.length;
-    return PROJECT_DATA[i];
-};
+export function ArgentLoopInfiniteSlider({ items = PROJECT_DATA, onItemClick }: { items?: ProjectData[], onItemClick?: (index: number) => void }) {
+    const dataList = items && items.length > 0 ? items : PROJECT_DATA;
 
-const getProjectNumber = (index: number) => {
-    return (
-        ((Math.abs(index) % PROJECT_DATA.length) + PROJECT_DATA.length) %
-        PROJECT_DATA.length +
-        1
-    )
-        .toString()
-        .padStart(2, "0");
-};
+    // Utility functions scoped to dataList length
+    const getProjectData = (index: number) => {
+        const i =
+            ((Math.abs(index) % dataList.length) + dataList.length) %
+            dataList.length;
+        return dataList[i];
+    };
 
-export function ArgentLoopInfiniteSlider({ onItemClick }: { onItemClick?: (index: number) => void }) {
+    const getProjectNumber = (index: number) => {
+        return (
+            ((Math.abs(index) % dataList.length) + dataList.length) %
+            dataList.length +
+            1
+        )
+            .toString()
+            .padStart(2, "0");
+    };
+
     const [visibleRange, setVisibleRange] = React.useState({
         min: -CONFIG.BUFFER_SIZE,
         max: CONFIG.BUFFER_SIZE,
