@@ -4,7 +4,7 @@ import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
-import { products as defaultProducts } from './data';
+// Removed seedDatabase and fallback data import
 
 const app = express();
 const PORT = 3000;
@@ -27,32 +27,6 @@ const authenticateToken = (req: any, res: Response, next: any) => {
         next();
     });
 };
-
-// === SEED DATABSE ON STARTUP ===
-async function seedDatabase() {
-    try {
-        const count = await prisma.product.count();
-        if (count === 0) {
-            console.log('[VACE] Seeding initial products...');
-            for (const p of defaultProducts) {
-                await prisma.product.create({
-                    data: {
-                        name: p.name,
-                        price: p.price,
-                        description: p.description,
-                        imageUrl: p.imageUrl,
-                        category: p.category,
-                    }
-                });
-            }
-            console.log('[VACE] Seeding complete.');
-        } else {
-            console.log(`[VACE] DB ready. Found ${count} products.`);
-        }
-    } catch (e) {
-        console.error('[VACE] DB Seed error:', e);
-    }
-}
 
 // === API ENDPOINTS ===
 
@@ -188,5 +162,4 @@ app.delete('/api/cart/:id', authenticateToken, async (req: any, res: Response) =
 
 app.listen(PORT, async () => {
     console.log(`[VACE] Server running on http://localhost:${PORT}`);
-    await seedDatabase();
 });
