@@ -160,6 +160,6 @@ app.delete('/api/cart/:id', authenticateToken, async (req: any, res: Response) =
     }
 });
 
-app.listen(PORT, async () => {
-    console.log(`[VACE] Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", async () => {
+    console.log(`[VACE] Server running on port ${PORT}`);
 });
