@@ -72,6 +72,7 @@ app.post('/api/auth/login', async (req, res) => {
         const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
         res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
     } catch (error) {
+        console.error("Login Error:", error);
         res.status(500).json({ error: 'Giriş sırasında hata oluştu.' });
     }
 });
@@ -82,6 +83,7 @@ app.get('/api/products', async (req, res) => {
         const products = await prisma.product.findMany({ orderBy: { id: 'asc' } });
         res.json(products);
     } catch (error) {
+        console.error("Fetch Products Error:", error);
         res.status(500).json({ error: 'Ürünler yüklenemedi.' });
     }
 });
@@ -92,6 +94,7 @@ app.get('/api/products/:id', async (req, res) => {
         if (product) res.json(product);
         else res.status(404).json({ error: 'Ürün bulunamadı.' });
     } catch (error) {
+        console.error("Fetch Product Detail Error:", error);
         res.status(500).json({ error: 'Sunucu hatası.' });
     }
 });
