@@ -12,7 +12,7 @@ const NewArrivals = () => {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/products');
+                const response = await fetch('/api/products');
                 const data = await response.json();
 
                 // Shuffle items for variety or just grab the latest

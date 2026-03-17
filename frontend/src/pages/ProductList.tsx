@@ -17,6 +17,9 @@ import { Button } from '@/components/ui/button';
 const ProductList = () => {
   const navigate = useNavigate();
   const heroRef = useRef<HTMLDivElement>(null);
+  const videoForwardRef = useRef<HTMLVideoElement>(null);
+  const videoReverseRef = useRef<HTMLVideoElement>(null);
+  const [isForward, setIsForward] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -35,7 +38,7 @@ const ProductList = () => {
   React.useEffect(() => {
     async function loadProducts() {
       try {
-        const response = await fetch('http://localhost:3000/api/products');
+        const response = await fetch('/api/products');
         const data = await response.json();
 
         // Map backend products to ZoomParallax format
@@ -50,7 +53,7 @@ const ProductList = () => {
           sizes: p.sizes || ['S', 'M', 'L', 'XL'] // Defaulting sizes if missing in DB
         }));
 
-        setParallaxImages(mappedData);
+        setParallaxImages(mappedData.slice(0, 7));
 
         const getHeroImage = (cat: string, fallbackId: number) => {
           const match = data.find((p: any) => p.category?.toLowerCase() === cat.toLowerCase());
@@ -119,13 +122,49 @@ const ProductList = () => {
     setIsModalOpen(true);
   };
 
+  const handleForwardEnded = () => {
+    setIsForward(false);
+    if (videoReverseRef.current) {
+      videoReverseRef.current.currentTime = 0;
+      videoReverseRef.current.play().catch(() => { });
+    }
+  };
+
+  const handleReverseEnded = () => {
+    setIsForward(true);
+    if (videoForwardRef.current) {
+      videoForwardRef.current.currentTime = 0;
+      videoForwardRef.current.play().catch(() => { });
+    }
+  };
+
   return (
     <div className="w-full bg-black">
       {/* 1. Hero Landing with Pinned Zoom */}
-      <section ref={heroRef} className="relative h-[200vh] w-full bg-black">
+      <section ref={heroRef} className="relative h-[200vh] w-full bg-black [clip-path:inset(0)]">
+        {/* Fixed Background Videos inside clipped section (Native Boomerang Loop) */}
+        <video
+          ref={videoForwardRef}
+          autoPlay
+          muted
+          playsInline
+          onEnded={handleForwardEnded}
+          className={`fixed top-0 left-0 w-screen h-screen object-cover z-0 pointer-events-none ${isForward ? 'opacity-50' : 'opacity-0'}`}
+          src="/assets/videos/background-video.mp4"
+        />
+        <video
+          ref={videoReverseRef}
+          muted
+          playsInline
+          onEnded={handleReverseEnded}
+          className={`fixed top-0 left-0 w-screen h-screen object-cover z-0 pointer-events-none ${!isForward ? 'opacity-50' : 'opacity-0'}`}
+          src="/assets/videos/background-video - REVERSE.mp4"
+        />
+        <div className="absolute inset-0 bg-black/50 z-0 pointer-events-none"></div>
+
         <motion.div
           style={{ scale: heroScale, opacity: heroOpacity }}
-          className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-black"
+          className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-transparent"
         >
           <div className="relative z-10 w-full flex items-center justify-center">
             <GooeyText

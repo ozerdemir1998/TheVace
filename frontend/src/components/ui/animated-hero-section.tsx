@@ -370,8 +370,7 @@ export function AnimatedHeroSection() {
         const drawGame = () => {
             if (!ctx) return
 
-            ctx.fillStyle = BACKGROUND_COLOR
-            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
 
             pixelsRef.current.forEach((pixel) => {
                 ctx.fillStyle = pixel.hit ? HIT_COLOR : COLOR
@@ -406,7 +405,7 @@ export function AnimatedHeroSection() {
     }, [])
 
     return (
-        <div ref={containerRef} className="w-full h-full relative overflow-hidden bg-black">
+        <div ref={containerRef} className="w-full h-full relative overflow-hidden bg-transparent">
             <canvas
                 ref={canvasRef}
                 className="w-full h-full"

@@ -40,7 +40,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     if (!token) return;
 
     try {
-      const res = await fetch('http://localhost:3000/api/cart', {
+      const res = await fetch('/api/cart', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
@@ -70,7 +70,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/cart', {
+      const res = await fetch('/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     if (token && itemToRemove && (itemToRemove as any).cartItemId) {
       try {
-        await fetch(`http://localhost:3000/api/cart/${(itemToRemove as any).cartItemId}`, {
+        await fetch(`/api/cart/${(itemToRemove as any).cartItemId}`, {
           method: 'DELETE',
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -120,7 +120,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     try {
       // The backend actually adds to the existing quantity on POST if it exists, but to set exact quantity we need a PUT/PATCH.
       // Since POST currently does `quantity + existing`, we send `delta` instead of `newQuantity`.
-      await fetch('http://localhost:3000/api/cart', {
+      await fetch('/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

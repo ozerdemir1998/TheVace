@@ -160,32 +160,32 @@ const CATEGORY_DATA = [
     {
         id: "tisort",
         title: "Tişört",
-        imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200",
+        imageUrl: "https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/19.png",
     },
     {
         id: "hoodie",
         title: "Hoodie",
-        imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1200",
+        imageUrl: "https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/2.png",
     },
     {
         id: "esofman-alti",
         title: "Eşofman Altı",
-        imageUrl: "https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1200",
+        imageUrl: "https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/14.png",
     },
     {
         id: "kapsonlu-sweat",
         title: "Kapşonlu Sweat",
-        imageUrl: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1200",
+        imageUrl: "https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/10.png",
     },
     {
         id: "mont",
         title: "Mont",
-        imageUrl: "https://images.unsplash.com/photo-1539533113208-f66027156bd1?q=80&w=1200",
+        imageUrl: "https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/6.png",
     },
     {
         id: "aksesuar",
         title: "Aksesuar",
-        imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200",
+        imageUrl: "https://raw.githubusercontent.com/ozerdemir1998/TheVace/main/imagesToPushGithub/1.png",
     },
 ];
 
@@ -208,7 +208,7 @@ const Products = () => {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/products');
+                const response = await fetch('/api/products');
                 const data = await response.json();
                 setRawProducts(data);
 

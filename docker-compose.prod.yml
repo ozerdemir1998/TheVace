@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: thevace_db_prod
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vace_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vace_password}
+      POSTGRES_DB: ${POSTGRES_DB:-thevace_db}
+    volumes:
+      - thevace_prod_pgdata:/var/lib/postgresql/data
+    networks:
+      - thevace_network
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: thevace_api_prod
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-vace_user}:${POSTGRES_PASSWORD:-vace_password}@db:5432/${POSTGRES_DB:-thevace_db}?schema=public
+      JWT_SECRET: ${JWT_SECRET:-your_secure_jwt_secret}
+    depends_on:
+      - db
+    networks:
+      - thevace_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: thevace_frontend_prod
+    restart: always
+    ports:
+      - "8080:80" # Exposed on 8080, can be proxied by host Nginx to domain
+    depends_on:
+      - api
+    networks:
+      - thevace_network
+
+networks:
+  thevace_network:
+    driver: bridge
+
+volumes:
+  thevace_prod_pgdata:

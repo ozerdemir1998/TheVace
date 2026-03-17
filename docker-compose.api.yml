@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: thevace_api
+    restart: always
+    environment:
+      POSTGRES_URI: ${POSTGRES_URI}
+      JWT_SECRET: ${JWT_SECRET:-your_secure_jwt_secret}
+    networks:
+      - proxy_network
+    # Host makinedeki PostgreSQL'e erişim için (gerekirse)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  proxy_network:
+    external: true

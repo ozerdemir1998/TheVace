@@ -41,7 +41,7 @@ const CategoryDetail = () => {
     React.useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/products');
+                const response = await fetch('/api/products');
                 const data = await response.json();
 
                 // If a specific category exists, filter it. Else, show all.
@@ -138,8 +138,12 @@ const CategoryDetail = () => {
             {/* Footer */}
             <footer className="w-full py-40 px-6 flex flex-col items-center gap-20 bg-black relative z-10 border-t border-white/[0.02]">
                 <div className="flex flex-col items-center gap-6">
-                    <div className="w-16 h-16 rounded-0 border border-white/10 flex items-center justify-center bg-white/[0.02] backdrop-blur-3xl rotate-45 transition-transform hover:rotate-0 duration-700">
-                        <span className="text-white font-black text-3xl -rotate-45 transition-transform hover:rotate-0 duration-700">V</span>
+                    <div className="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center mb-[-1rem]">
+                        <img
+                            src="/assets/images/gorilla-logo.png"
+                            alt="The Vace Logo"
+                            className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] animate-holo-wobble"
+                        />
                     </div>
                     <div className="text-center">
                         <h2 className="text-6xl font-black italic tracking-tighter mb-4">THE VACE</h2>
