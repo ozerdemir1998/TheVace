@@ -12,6 +12,8 @@ services:
       JWT_SECRET: ${JWT_SECRET:-your_secure_jwt_secret}
     networks:
       - vace-network
+    ports:
+      - "3000:3000"
     # Host makinedeki PostgreSQL'e erişim için (gerekirse)
     extra_hosts:
       - "host.docker.internal:host-gateway"
