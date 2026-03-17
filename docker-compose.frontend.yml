@@ -10,8 +10,8 @@ services:
     ports:
       - "8080:80"
     networks:
-      - proxy_network
+      - vace-network
 
 networks:
-  proxy_network:
+  vace-network:
     external: true

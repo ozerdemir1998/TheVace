@@ -11,11 +11,11 @@ services:
       POSTGRES_URI: ${POSTGRES_URI}
       JWT_SECRET: ${JWT_SECRET:-your_secure_jwt_secret}
     networks:
-      - proxy_network
+      - vace-network
     # Host makinedeki PostgreSQL'e erişim için (gerekirse)
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
 networks:
-  proxy_network:
+  vace-network:
     external: true
