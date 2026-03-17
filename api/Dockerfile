@@ -26,7 +26,6 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/index.ts ./
-COPY --from=builder /app/.env ./
 
 EXPOSE 3000
 
